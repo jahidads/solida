@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOLIDA | Creating Great Website Experiences</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.pixabay.com/animation/2023/01/26/04/06/04-06-10-848_512.gif">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #e11d48;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #a88f8f;
+            color: var(--secondary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, #ffffff 0%, #d5dadf 100%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto; 
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.2rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 0.8rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: rgba(225, 29, 72, 0.2);
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #4b5563;
+            padding: 0 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: 2px solid var(--accent);
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.4);
+        }
+
+        .clients {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 6rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-width: 800px;
+            margin: 6rem auto 0;
+        }
+
+        .client-logo {
+            font-weight: 700;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            transition: var(--transition);
+            padding: 1rem 2rem;
+            border-radius: 80px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .client-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .client-logo.google {
+            color: #4285F4;
+        }
+
+        .client-logo.netflix {
+            color: #E50914;
+        }
+
+        .client-logo.black {
+            background: var(--secondary);
+            color: white;
+        }
+
+        /* Services Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotate(10deg) scale(1.1);
+            background: rgba(225, 29, 72, 0.1);
+            color: var(--accent);
+        }
+
+        .service-card h3 {
+            font-size: clamp(1.2rem, 2vw, 1.4rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #64748b;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        /* Process Section */
+        .process {
+            background: white;
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+            max-width: 1200px;
+        }
+
+        .process-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .process-text {
+            flex: 1;
+        }
+
+        .process-text h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .process-text p {
+            margin-bottom: 2rem;
+            color: #4b5563;
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+            line-height: 1.7;
+        }
+
+        .process-steps {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .step:hover .step-number {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .step-content h4 {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .step-content p {
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            color: #64748b;
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .portfolio-item {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            height: 280px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: var(--transition);
+        }
+
+        .portfolio-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--secondary);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .portfolio-item:hover .portfolio-info {
+            transform: translateY(0);
+        }
+
+        .portfolio-info h3 {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .portfolio-info .continued {
+            font-size: 0.9rem;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            border-radius: 24px;
+            margin: 3rem auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(225, 29, 72, 0.2) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #cbd5e1;
+            padding: 0 15px;
+        }
+
+        .cta .btn {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 0.9rem 2.2rem;
+        }
+
+        .cta .btn:hover {
+            background: white;
+            color: var(--accent);
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-title {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer-logo {
+            flex: 1;
+        }
+
+        .footer-logo .logo {
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: white;
+        }
+
+        .footer-logo p {
+            color: #cbd5e1;
+            max-width: 300px;
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-links {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .link-group h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .link-group h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .link-group ul {
+            list-style: none;
+            margin-top: 1.2rem;
+        }
+
+        .link-group li {
+            margin-bottom: 0.8rem;
+        }
+
+        .link-group a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+            display: inline-block;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .link-group a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #334155;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .date {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin-top: 0.5rem;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            box-shadow: 0 5px 15px rgba(225, 29, 72, 0.3);
+            z-index: 999;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .process-content {
+                flex-direction: row;
+                gap: 5rem;
+            }
+            
+            .footer-content {
+                flex-direction: row;
+            }
+            
+            .footer-links {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: var(--transition);
+                z-index: 1000;
+            }
+            
+            nav ul.active {
+                right: 0;
+            }
+            
+            nav li {
+                margin: 1rem 0;
+            }
+            
+            .hero {
+                padding-top: 8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .clients {
+                padding: 1.5rem;
+            }
+            
+            .client-logo {
+                min-width: 120px;
+                padding: 0.8rem 1rem;
+            }
+            
+            .process {
+                padding: 3rem 1.5rem;
+            }
+            
+            .step {
+                gap: 1rem;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#hero" class="logo">SOLI<span>DA</span></a>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#stats">Stats</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="https://wa.me/8801308839759" class="btn">Get Started</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <h1 class="fade-in">Creating great <span>website user experiences</span></h1>
+            <p class="fade-in">We design and develop digital experiences that engage your audience and drive measurable results for your business.</p>
+            <div class="fade-in">
+            <a href="#contact" class="btn">Get Started Today</a>
+            </div>
+            
+            <div class="clients fade-in" style="overflow:hidden; position:relative;">
+            <div class="logos-marquee" style="display:flex; gap:0.5rem; animation:move-logos 20s linear infinite;">
+                <div class="client-logo apple">
+                    <img src="https://img.icons8.com/?size=48&id=JJXWcefHiiDM&format=png" alt="Apple" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo Boot">
+                    <img src="https://img.icons8.com/?size=48&id=L3uh0mNuxBXw&format=png" alt="Boot" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo Copilot">
+                    <img src="https://img.icons8.com/?size=48&id=PxQoyT1s0uFh&format=png" alt="Copilot" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo gemini">
+                    <img src="https://img.icons8.com/?size=48&id=rnK88i9FvAFO&format=png" alt="Gemini" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo github copilot">
+                    <img src="https://img.icons8.com/?size=48&id=Yl9ip6CjqAEI&format=png" alt="GitHub Copilot" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo chatgpt">
+                    <img src="https://img.icons8.com/?size=50&id=Nts60kQIvGqe&format=png" alt="chatgpt" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo Deepeek">
+                    <img src="https://img.icons8.com/?size=48&id=YWOidjGxCpFW&format=png" alt="Deepeek" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo google">
+                    <img src="https://img.icons8.com/?size=48&id=17949&format=png" alt="Google" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+                <div class="client-logo netflix">
+                    <img src="https://img.icons8.com/?size=48&id=Z6WudpuL13T9&format=png" alt="Netflix" style="height:32px;vertical-align:middle;margin-right:8px;">
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes move-logos {
+            0% { transform: translateX(100%);}
+            100% { transform: translateX(-100%);}
+            }
+            .logos-marquee {
+            min-width: 600px;
+            }
+            /* More style for logos marquee */
+            .logos-marquee .client-logo {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin: 0 8px;
+            border-radius: 40px;
+            transition: box-shadow 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            height: 48px;
+            }
+            .logos-marquee .client-logo:hover {
+            box-shadow: 0 6px 16px rgba(37,99,235,0.12);
+            transform: scale(1.08);
+            background: #f3f4f6;
+            }
+            .logos-marquee img {
+            max-height: 32px;
+            max-width: 32px;
+            vertical-align: middle;
+            margin-right: 0;
+            filter: grayscale(0.2);
+            transition: filter 0.3s;
+            }
+            .logos-marquee .client-logo:hover img {
+            filter: none;
+            }
+            @media (max-width: 600px) {
+            .logos-marquee {
+                min-width: 350px;
+                gap: 0.2rem;
+            }
+            .logos-marquee .client-logo {
+                min-width: 60px;
+                height: 36px;
+            }
+            .logos-marquee img {
+                max-height: 24px;
+                max-width: 24px;
+            }
+            }
+        </style>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Services provide for you</h2>
+                <p class="fade-in">Comprehensive solutions tailored to your business needs</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Search Images</h3>
+                    <p>Advanced image search solutions that help you find the perfect visuals for your brand.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Promoting Tips</h3>
+                    <p>Expert promotion strategies tailored to increase visibility and engagement.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3>Open Resources</h3>
+                    <p>Access to our curated library of resources to accelerate your digital growth.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Data Updates</h3>
+                    <p>Real-time data synchronization to keep your information current and accurate.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Data Feedback</h3>
+                    <p>Comprehensive analytics to understand user behavior and improve experiences.</p>
+                </div>
+                
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Request Files</h3>
+                    <p>Secure file management solutions to streamline your workflows and collaboration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Working process</h2>
+                <p class="fade-in">Our systematic approach to delivering exceptional results</p>
+            </div>
+            
+            <div class="process fade-in">
+                <div class="process-content">
+                    <div class="process-text">
+                        <h2>Before we jumped in, we underwent</h2>
+                        <p>Our process begins with a deep understanding of your business, goals, and challenges. We don't just build websites - we create strategic digital experiences that drive results.</p>
+                        <p>Through research, collaboration, and continuous refinement, we ensure every project delivers maximum value and exceeds expectations.</p>
+                    </div>
+                    
+                    <div class="process-steps">
+                        <div class="step fade-in">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Discovery & Research</h4>
+                                <p>Understanding your business, audience, and objectives.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step fade-in">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Strategy & Planning</h4>
+                                <p>Developing a tailored strategy to achieve your goals.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step fade-in">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Design & Development</h4>
+                                <p>Crafting visually stunning and technically robust solutions.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step fade-in">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Testing & Launch</h4>
+                                <p>Rigorous testing followed by strategic launch.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Our Impact in Numbers</h2>
+                <p class="fade-in">Measuring success through tangible results</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card fade-in">
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-title">Projects Completed</div>
+                </div>
+                
+                <div class="stat-card fade-in">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-title">Client Satisfaction</div>
+                </div>
+                
+                <div class="stat-card fade-in">
+                    <div class="stat-number" data-count="12">0</div>
+                    <div class="stat-title">Industry Awards</div>
+                </div>
+                
+                <div class="stat-card fade-in">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-title">Team Members</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="fade-in">Some of our creative works</h2>
+                <p class="fade-in">Explore our portfolio of successful projects</p>
+            </div>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://cdn.pixabay.com/photo/2023/09/27/10/48/portfolio-8279357_640.jpg');"></div>
+                    <div class="portfolio-info">
+                        <h3>Portfolio Website</h3>
+                        <a href="https://jahidads.github.io/Portfolio/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1847121853/photo/futuristic-digital-background-with-unique-glowing-yellow-shield-protection-against-hacker.jpg?s=612x612&w=0&k=20&c=o8sA-11Am7-3mcxqqtAQvzcy6ROx4YAjekGGP0x1Iio=');"></div>
+                    <div class="portfolio-info">
+                        <h3>CyberShield Website</h3>
+                        <a href="https://jahidads.github.io/CyberShield/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2174551157/photo/cyber-security-data-protection-business-technology-privacy-concept.jpg?s=612x612&w=0&k=20&c=Uu7-WupcUWAKcyMEtoHLriKNnHOGrljO_Nds6NnwDxQ=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Cyber-Security website</h3>
+                        <a href="https://jahidads.github.io/Cyber-Security/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2193247029/photo/business-team-analyzing-interactive-digital-dashboards-with-data-visualizations.jpg?s=612x612&w=0&k=20&c=HtZUwhV03NtKN4OtSY4mG4jD3K5zzzzGRF4kgaTcOes=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Business portfolio Website</h3>
+                        <a href="https://jahidads.github.io/business-portfolio/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1979289147/photo/data-analysis-science-and-big-data-with-ai-technology-analyst-or-scientist-uses-a-computer.jpg?s=612x612&w=0&k=20&c=vmC-jVG6PNPRQtgtBp2y1caApEGYjt-fDrm0VzRgvK8=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Developer-portfolio</h3>
+                        <a href="https://jahidads.github.io/Developer-portfolio/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2200548447/photo/keywords-browse-in-office-optimize-seo-enginethe-internet-and-digital-technology-optimize.jpg?s=612x612&w=0&k=20&c=usl1x0NDdLv58kMWJmQhVCffRjw-Xm_apQu0qJ2TOjU=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Traditional Website</h3>
+                        <a href="https://jahidads.github.io/my-traditional-website/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2115470813/photo/portfolio-word-with-tower-crane.jpg?s=612x612&w=0&k=20&c=KiMOyCRIB-IYUBa8NI-S4LyLJv2utvJDeRtW2omXrT4=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Personal Portfolio</h3>
+                        <a href="https://jahidads.github.io/my-portfolio/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2148573173/photo/real-estate-concept-business-home-insurance-and-real-estate-protection-buy-and-sell-houses.jpg?s=612x612&w=0&k=20&c=tIv889DhDbmgjh6HZ1pMshDz3AHk41-RTNMXHwqbeG8=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Web Developer</h3>
+                        <a href="https://jahidads.github.io/Web-Developer/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2159453081/photo/3d-rendering-of-business-finance-investment.jpg?s=612x612&w=0&k=20&c=NSTRrZ1mxy2pVKUwDnguoqVa1cfzCXhTZ7TrLYLMFIM=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Resume Portfolio</h3>
+                        <a href="https://jahidads.github.io/Resume-Portfolio/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1557118048/photo/a-concept-that-expresses-the-hyper-connected-society-of-modern-society-by-connecting-people.jpg?s=612x612&w=0&k=20&c=7X-Keif1gNr5CsjR9OgHNpTx9sio9pc4UfSNCwGnLbk=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Team Project</h3>
+                        <a href="https://jahidads.github.io/TeamPro/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2223766494/photo/mobile-digital-wallet-payment-successful-person-professional-using-smartphone-for-secure.jpg?s=612x612&w=0&k=20&c=cv-srwtKhgLR-JYvYLxDqy306N-hAX6rZPF46xZA95I=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Easypay system</h3>
+                        <a href="https://jahidads.github.io/EasyPay/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1449034129/photo/blogging-for-beginners-how-to-start-blog-word-blog-and-laptop-mobile-phone-notebook-and.jpg?s=612x612&w=0&k=20&c=-NTl4B30g2wiXj8jaXRWIwD5rcUUsT_b0oltHmrvgKU=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Developer-blog website</h3>
+                        <a href="https://jahidads.github.io/Blog/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1934575967/photo/where-to-invest-my-money-3d-rendering.jpg?s=612x612&w=0&k=20&c=ucmrI3QeqOuEyg8zbcOhXZrvUASWUwSSgu38wYRgP04=');"></div>
+                    <div class="portfolio-info">
+                        <h3>DevCaseHub website</h3>
+                        <a href="https://jahidads.github.io/DevCaseHub/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1919863292/photo/e-learning-education-internet-lessons-and-online-learning-with-webinars-video-tutorials.jpg?s=612x612&w=0&k=20&c=zWAqp6FGH-zm6b0Os_CssxubtrgKh1MyFeMgelFZbOg=');"></div>
+                    <div class="portfolio-info">
+                        <h3>Online Learning Platform</h3>
+                        <a href="https://jahidads.github.io/Webinars/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2172856677/photo/time-and-business-management-target-time-reduce-concept-business-woman-show-virtual-clock-in.jpg?s=612x612&w=0&k=20&c=9iIUZAteqjNfafGhFReenrYaRtolZdYgyj4V6g1n8_o=');"></div>
+                    <div class="portfolio-info">
+                        <h3>WorkHub website</h3>
+                        <a href="https://jahidads.github.io/WorkHub/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1515913422/photo/a-data-analyst-using-technology-ai-for-working-tool-for-data-analysis-chatbot-chat-with-ai.jpg?s=612x612&w=0&k=20&c=oOKLdZJpcsrUbNrnGVf8TwoIdYud4mWoBkx1A3PdXI0=');"></div>
+                    <div class="portfolio-info">
+                        <h3>DevTools</h3>
+                        <a href="https://jahidads.github.io/DevTools/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2150620041/photo/concept-of-electronic-books-3d-illustration-of-male-guy-qadir-standing-in-front-of-laptop-and.jpg?s=612x612&w=0&k=20&c=PXVca05PUaiGXT0yZVI6OoWDR4N_S_HgDbnLeoeyj5E=');"></div>
+                    <div class="portfolio-info">
+                        <h3>BookHub</h3>
+                        <a href="https://jahidads.github.io/BookHub/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2007152607/photo/e-library-concept-women-use-a-laptop-with-virtual-ebook-icons-for-electronic-books-online-the.jpg?s=612x612&w=0&k=20&c=PfjfZPRO1PbJGhz3YHEXg2rDTEDj7a7aBoIqhZQk4OQ=');"></div>
+                    <div class="portfolio-info">
+                        <h3>E-Book</h3>
+                        <a href="https://jahidads.github.io/E-Book/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/1419116294/photo/stylized-web-pages-and-interfaces-business-and-technology-theme-3d-illustration.jpg?s=612x612&w=0&k=20&c=DYtJViTjPXz4UBkjZDgjBSuFAxuEjFTS1AXKqOPFjcw=');"></div>
+                    <div class="portfolio-info">
+                        <h3>PixelPath</h3>
+                        <a href="https://jahidads.github.io/PixelPatch/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2186165892/photo/ai-chatbots-interface-providing-fitness-and-productivity-tips-emphasizing-practical-advice.jpg?s=612x612&w=0&k=20&c=jaPdTANjwd8L6pYzMBDukkYevxwAK8z7L8nqzktChlk=');"></div>
+                    <div class="portfolio-info">
+                        <h3>nexus</h3>
+                        <a href="https://jahidads.github.io/nexus/" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2186829864/photo/hand-hacking-laptop-computer.jpg?s=612x612&w=0&k=20&c=J1iskQ4W0_y-WkgewacrG8Yc3NYL2ax2c5bc-pDd5SQ=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2180695620/photo/scam-alert-warning-with-cybersecurity-icons-a-person-using-laptop-warning-sign-for-scams-with.jpg?s=612x612&w=0&k=20&c=lLVjY7lE5HLCFy3lMWJeX4BeDbCVPC-jsNYXMmop4C4=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2153478836/photo/digital-technology-internet-network-connection-big-data-digital-marketing-iot-internet-of.jpg?s=612x612&w=0&k=20&c=t_CHPyJiIM2-_ZOPKs9Vz9zL-opSBZvEGrTlJzpBIgs=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2171674959/photo/consumers-or-customers-give-a-five-star-rating-for-the-highest-satisfaction.jpg?s=612x612&w=0&k=20&c=stEpPdTKBTStHv_8ippoJNJeQTBAyPgPm9x8QMqvDOE=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2155769551/photo/digital-data-tunnel-information-flow.jpg?s=612x612&w=0&k=20&c=udcpKwRiTFP--_vtNaR5lEMQhUaveDT8Spj3yV5BUPY=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2149530993/photo/digital-human-head-concept-for-ai-metaverse-and-facial-recognition-technology.jpg?s=612x612&w=0&k=20&c=IduORJUs1c1s0m2SXQANsK8IUhtlz8QApsLxNYOYrXQ=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item fade-in">
+                    <div class="portfolio-img" style="background-image: url('https://media.istockphoto.com/id/2172249360/photo/ai-artificial-intelligence-concept-cpu-quantum-computing-digital-transformation-and-big-data.jpg?s=612x612&w=0&k=20&c=s9G8qkM5zxuYfARpsdc5Cd_834A-EDlrf5fTZcDo1Hk=');"></div>
+                    <div class="portfolio-info">
+                        <h3>coming soon</h3>
+                        <a href="#" target="_blank"><p class="continued">View Project</p></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="fade-in">Let's make something great!</h2>
+                <p class="fade-in">Ready to transform your digital presence? Contact us today to discuss your project.</p>
+                <a href="https://wa.me/8801308839759" class="btn fade-in">Start Your Project</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">SOLI<span>DA</span></a>
+                    <p>Creating exceptional digital experiences that engage users and drive business growth.</p>
+                    <div class="social-links">    
+                        <a href="https://www.facebook.com/jahidads1" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/jahidhasan_tw" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/jahidhasan2.0ff/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://bd.linkedin.com/in/jahidads" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <h3 class="date" style="padding: 10px;">Last Updated: <span id="currentDate"></span></h3>
+                    <script>
+                        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+                    </script>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="https://jahidads.github.io/Portfolio/">Portfolio Design</a></li>
+                            <li><a href="https://jahidads.github.io/Cyber-Security/">Cybersecurity</a></li>
+                            <li><a href="https://jahidads.github.io/CyberShield/">CyberShield</a></li>
+                            <li><a href="https://jahidads.github.io/BookHub/">BookHub</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="https://jahidads.github.io/Developer-portfolio/" target="_blank">Developer portfolio</a></li>
+                            <li><a href="https://jahidads.github.io/business-portfolio/" target="_blank">Business Solutions</a></li>
+                            <li><a href="https://jahidads.github.io/my-portfolio/" target="_blank">My Portfolio</a></li>
+                            <li><a href="https://jahidads.github.io/PixelPatch/" target="_blank">PixelPath</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="https://jahidads.github.io/Blog/" target="_blank">Blog</a></li>
+                            <li><a href="https://jahidads.github.io/DevCaseHub/" target="_blank">Case Studies</a></li>
+                            <li><a href="https://jahidads.github.io/Webinars/" target="_blank">Webinars</a></li>
+                            <li><a href="https://jahidads.github.io/DevTools/" target="_blank">Free Tools</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="link-group">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="https://jahidads.github.io/WorkHub/">Help Center</a></li>
+                            <li><a href="mailto:jahid4hasan.2000@gmail.com">Text message</a></li>
+                            <li><a href="https://m.me/jahidads1" target="_blank">Live Support</a></li>
+                            <li><a href="https://jahidads.github.io/TeamPro/" target="_blank">Teampro</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <h3>Thank you for visiting my website!</h3>
+                <p>&copy; 2025 SOLIDA. Developer Jahid Hasan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            menuToggle.innerHTML = navMenu.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 500) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Counter animation for stats
+        const statCounters = document.querySelectorAll('.stat-number');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    startCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        statCounters.forEach(counter => {
+            observer.observe(counter);
+        });
+        
+        function startCounter(element) {
+            const target = parseInt(element.getAttribute('data-count'));
+            const duration = 2000;
+            const frameDuration = 1000 / 60;
+            const totalFrames = Math.round(duration / frameDuration);
+            let frame = 0;
+            
+            const counter = setInterval(() => {
+                frame++;
+                const progress = frame / totalFrames;
+                const currentCount = Math.round(target * progress);
+                
+                if (currentCount <= target) {
+                    element.textContent = currentCount + '+';
+                } else {
+                    clearInterval(counter);
+                }
+            }, frameDuration);
+        }
+
+        // Scroll reveal animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('appear');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+        
+        fadeElements.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
